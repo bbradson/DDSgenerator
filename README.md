@@ -1,6 +1,6 @@
 # DDSgenerator
 
-A script to quickly and easily generate DDS files for textures, with the goal of reducing load times, RAM usage and VRAM usage, as well as improving fps.
+A script to quickly and easily generate DDS files for textures, with the goal of improving texture quality, reducing load times, RAM usage and VRAM usage.
 Created for Rimworld, but this should work just fine for other games too.
 
 Makes use of Microsoft texconv and texdiag as well as ImageMagick.
