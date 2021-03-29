@@ -8,7 +8,7 @@ Supported formats are JPG and PNG, but other formats supported by ImageMagick ca
 
 General usage of this script is:
  - Place the script and its dependancies folder in a folder that contains pictures anywhere, including subfolders, and all their subfolders.
- - Right-click
+ - Right-click DDSgenerator.ps1
  - Run with powershell
  - ???
 
