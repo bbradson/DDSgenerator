@@ -4,10 +4,10 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
     exit;
 }
 
-#Checking for dependancies
-if (!(Get-Command $PSScriptRoot\dependancies\magick.exe -errorAction SilentlyContinue) -or !(Get-Command $PSScriptRoot\dependancies\texconv.exe -errorAction SilentlyContinue) -or !(Get-Command $PSScriptRoot\dependancies\texdiag.exe -errorAction SilentlyContinue))
+#Checking for dependencies
+if (!(Get-Command $PSScriptRoot\dependencies\magick.exe -errorAction SilentlyContinue) -or !(Get-Command $PSScriptRoot\dependencies\texconv.exe -errorAction SilentlyContinue) -or !(Get-Command $PSScriptRoot\dependencies\texdiag.exe -errorAction SilentlyContinue))
 {
-    Write-Host "Dependancies not found. Make sure to put the dependancies folder in the same place as the script." -ForegroundColor Yellow
+    Write-Host "Dependencies not found. Make sure to put the dependencies folder in the same place as the script." -ForegroundColor Yellow
     Start-Sleep 10
     return
 }
@@ -53,16 +53,16 @@ $Scriptblock = {
     $ddsQuoted = '"' + $dds + '"'
 
     #Checking for transparency
-    $opaque = & $scriptpath\dependancies\magick.exe identify -format %[opaque] $pngQuoted
+    $opaque = & $scriptpath\dependencies\magick.exe identify -format %[opaque] $pngQuoted
 
     #Checking colorspace. texconv can't convert this, so it's necessary here
-    $texd = & $scriptpath\dependancies\texdiag.exe info $pngQuoted
+    $texd = & $scriptpath\dependencies\texdiag.exe info $pngQuoted
 
     #texconv compression. -y allows overwriting, -vflip flips to fulfil the unity requirement, -fixbc4x4 tries to fix unsupported texture dimensions, -o is the output
-    function futexconv { & $scriptpath\dependancies\texconv.exe $MipMaps $format -y -vflip -fixbc4x4 -o $output $pngQuoted }
+    function futexconv { & $scriptpath\dependencies\texconv.exe $MipMaps $format -y -vflip -fixbc4x4 -o $output $pngQuoted }
 
     #ImageMagick compression
-    function fuMagick { & $scriptpath\dependancies\magick.exe $pngQuoted -flip -define dds:compression=dxt1 $MipMapIM $ddsQuoted }
+    function fuMagick { & $scriptpath\dependencies\magick.exe $pngQuoted -flip -define dds:compression=dxt1 $MipMapIM $ddsQuoted }
 
     #Fully opaque images get compressed with DXT1/BC1, others with BC7. DXT1 has a 50% lower size than BC7, but if quality is important using BC7 everywhere is possible too.
     if ($opaque -eq 'True') {
